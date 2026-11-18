@@ -1,11 +1,43 @@
-# Semana 4 + 5 · Capstone · Huella de carbono verificable (calzado, Sincelejo)
+#  Trazabilidad y Huella de Carbono Verificable - Fábrica de Calzado (Sincelejo)
 
-Contenido:
-- `GUIA_PASO_A_PASO.md` — comandos y orden de trabajo (Git Bash → `wsl`).
-- `chaincode/` — `supplycc.go` (contrato), `calculos.go` + `calculos_test.go` (fórmulas en enteros), `Dockerfile` (CCaaS), `go.mod`, `go.sum`.
-- `api/` — `app.js` y `package.json` (Express + fabric-gateway).
-- `deploy-supplycc.sh` · `flujo-completo.sh` · `pruebas-api.sh` · `verificar-laboratorio.sh` · `lib.sh`.
-- `laboratorio_capstone_BORRADOR.docx` — hoja del profesor con respuestas de borrador (azul) y datos que deben pegar ustedes (rojo, con ▶).
+**Laboratorio Capstone — Semanas 4 + 5**
+*Blockchain Empresarial con Hyperledger Fabric*
 
-Orden: `./verificar-laboratorio.sh` → `./deploy-supplycc.sh` → `./flujo-completo.sh` → API (`npm run org1` / `npm run org2`) → `./pruebas-api.sh`.
-Todo se ejecuta dentro de WSL (Ubuntu) con la red de la Semana 3 arriba.
+Este repositorio contiene la solución completa para el sistema de trazabilidad y cálculo de huella de carbono (CO2e) de una fábrica de calzado en Sincelejo, utilizando una red permisionada de Hyperledger Fabric, un Smart Contract (Chaincode) en Go y una API REST en Node.js.
+
+##  Video de Sustentación y Demostración
+Mira la demostración en vivo del sistema de principio a fin, incluyendo la ejecución del flujo completo y la explicación técnica:
+ **[Ver Video en YouTube](https://youtu.be/NPPASpuzCss)**
+
+---
+
+##  Integrantes
+*   Jesús Villalba
+*   Jesús Madera
+*   *Programa:* Ingeniería de Sistemas
+
+---
+
+##  Arquitectura de la Solución
+El sistema simula un consorcio entre dos organizaciones:
+*   **Org1 (Proveedores):** Curtiembres y fábricas de suelas que declaran la huella de sus materiales.
+*   **Org2 (Fábrica):** Recibe la mercancía, valida con su báscula y calcula la huella final por par de zapato.
+*   **Red:** Hyperledger Fabric 2.5 (Canal: `supplychannel`, Ordenador Raft).
+*   **Consenso:** Política de Endorsement `AND('Org1MSP.peer', 'Org2MSP.peer')`.
+
+##  Estructura del Repositorio
+
+```text
+Laboratorio 4 y 5/
+├── chaincode/
+│   ├── supplycc.go        # Lógica de negocio y contrato inteligente
+│   ├── calculos.go        # Fórmulas y validaciones (HC por par = A+B+C+D / N)
+│   ├── calculos_test.go   # Pruebas unitarias del contrato
+│   └── go.mod / go.sum    # Dependencias de Go
+├── api/
+│   ├── app.js             # API REST con fabric-gateway
+│   ├── package.json       # Configuración de Node.js
+│   └── package-lock.json  # Dependencias exactas
+├── deploy-supplycc.sh     # Script para desplegar el chaincode (CCaaS)
+├── flujo-completo.sh      # Script de demostración del flujo completo
+└── README.md              # Este documento
